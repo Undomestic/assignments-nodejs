@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { padding: 10px; margin: 5px; }
+        #output { background: #f0f0f0; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>To-Do API Test</h1>
+    
+    <div>
+        <input type="text" id="todoText" placeholder="Enter todo text" />
+        <button onclick="addTodo()">Add Todo</button>
+    </div>
+    
+    <div>
+        <button onclick="getTodos()">Get All Todos</button>
+        <button onclick="testRoot()">Test Root</button>
+    </div>
+    
+    <div id="output"></div>
+
+    <script>
+        function addTodo() {
+            const text = document.getElementById('todoText').value;
+            if (!text) {
+                alert('Please enter todo text');
+                return;
+            }
+            
+            fetch('http://localhost:8080/todos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: text })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').innerHTML = '<h3>Add Todo Response:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            })
+            .catch(error => {
+                document.getElementById('output').innerHTML = '<h3>Error:</h3><pre>' + error + '</pre>';
+            });
+        }
+        
+        function getTodos() {
+            fetch('http://localhost:8080/todos')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('output').innerHTML = '<h3>All Todos:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            })
+            .catch(error => {
+                document.getElementById('output').innerHTML = '<h3>Error:</h3><pre>' + error + '</pre>';
+            });
+        }
+        
+        function testRoot() {
+            fetch('http://localhost:8080/')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('output').innerHTML = '<h3>Root Response:</h3><pre>' + data + '</pre>';
+            })
+            .catch(error => {
+                document.getElementById('output').innerHTML = '<h3>Error:</h3><pre>' + error + '</pre>';
+            });
+        }
+    </script>
+</body>
+</html>
