@@ -1,0 +1,13 @@
+{
+    "name": "stream-csv-domains",
+    "private": true,
+    "type": "module",
+    "version": "1.0.0",
+    "scripts": {
+      "start": "node src/server.mjs",
+      "process": "node -e \"import('./src/processDomains.js').then(m=>m.processDomains())\""
+    },
+    "engines": {
+      "node": ">=18.17"
+    }
+  }
