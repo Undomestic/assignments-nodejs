@@ -1,0 +1,9 @@
+{
+  "name": "Test JSON",
+  "version": "1.0.0",
+  "data": [
+    1,
+    2,
+    3
+  ]
+}
